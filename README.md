@@ -1,6 +1,10 @@
 # go-mobile-log-elk
 Sample Application showing how to we write remote logs using 'go' generated mobile libraries (android and ios)
 
+# Start ELK Stack
+
+docker-compose up -d
+
 # Generate .aar/.framework file
 Issue command to generate library file
 
