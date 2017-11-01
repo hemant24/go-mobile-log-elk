@@ -1,0 +1,30 @@
+---
+version: '2'
+services:
+  elasticsearch :
+    image : hemant24/elasticsearch:2-plugin
+    container_name : elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  logstash :
+    image : hemant24/logstash:tcp-plugin
+    container_name : logstash
+    ports :
+     - "8601:8601"
+    volumes :
+      - ./logstash-resources:/logstash-resources 
+    links :
+      - elasticsearch:elasticsearch
+    command : logstash -f /logstash-resources/logstash.conf --verbose 
+
+  kibana:
+    image: kibana:4.5.1
+    container_name : kibana
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    links:
+      - elasticsearch:elasticsearch
